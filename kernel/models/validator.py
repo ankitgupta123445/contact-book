@@ -10,6 +10,7 @@ import re
 from kernel.utils import CustomException, Codes
 from .db_schema import INTERNAL_FIELDS
 from six import string_types
+from validate_email import validate_email
 
 
 def validate_schema(data, schema, format_checker=True):
@@ -43,7 +44,7 @@ def validate_partial_update_set_unset(source_dict, source_schema):
     """
         DO PARTIAL VALIDATION OF Update Keys in $set and $unset Oprators
     """
-    for key, value in source_dict.iteritems():
+    for key, value in source_dict.items():
         key_split = key.split(".")
         check_key = key_split[0]
 
@@ -75,7 +76,7 @@ def validate_dict(data, schema):
                 try:
                     validate(v, schema['properties'][k])
                 except Exception as e:
-                    raise TypeError("Invalid {} : {}".format(k, e.message))
+                    raise e
 
 
 def validate_list(data, schema):
@@ -126,9 +127,9 @@ def check_format(data, schema):
         for check in schema.get('allOf'):
             check_format(data, check)
     if schema.get('maxLength'):
-        maxLength(data, schema.get('maxLength'))
+        max_length(data, schema.get('maxLength'))
     if schema.get('minLength'):
-        minLength(data, schema.get('minLength'))
+        min_length(data, schema.get('minLength'))
     if schema.get('format'):
         if FORMAT_CHECKS.get(schema.get('format')):
             FORMAT_CHECKS[schema.get('format')](data)
@@ -145,7 +146,7 @@ def check_uri(data):
 
 
 def check_email(data):
-    if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]{2,}\.[a-zA-Z]{2,}", data):
+    if not validate_email(data):
         raise TypeError("Invalid email format, found {}".format(data))
 
 
@@ -159,7 +160,7 @@ def max_length(value, key):
         raise Exception("maxLength is {} : found {} in ({})".format(key, len(value), value))
 
 
-def min_ength(value, key):
+def min_length(value, key):
     if len(value) < key:
         raise Exception("minLength is {} : found {} in ({})".format(key, len(value), value))
 

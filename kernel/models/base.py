@@ -41,7 +41,7 @@ def apply_default_filter_args(filter_args=None,
                 _id = ObjectId(q_criteria['_id'])
                 q_criteria['_id'] = _id
             elif isinstance(q_criteria['_id'], dict):
-                for op, val in q_criteria['_id'].iteritems():
+                for op, val in q_criteria['_id'].items():
                     if isinstance(val, string_types) and len(val) == 24:
                         _id = ObjectId(val)
                         q_criteria['_id'][op] = _id
@@ -113,7 +113,7 @@ class BaseResource(object):
         Validate Update Args
         """
         update_document = {}
-        for op, value in update_args.iteritems():
+        for op, value in update_args.items():
             if op in ['$unset', '$set', '$inc']:
                 validator.validate_partial_update_set_unset(value, cls._schema_)
                 update_document[op] = dict(value)
@@ -184,7 +184,6 @@ class BaseResource(object):
         self.db_coll.update(
             {'_id': self._id},
             {'$set': {'is_deleted': True}})
-        self.__delete_ssearch_object__()
 
     @classmethod
     def delete_all(cls, filter_args):
@@ -297,7 +296,7 @@ class BaseResource(object):
                 update_args = v.get('update_args')
                 if find_args and update_args:
                     update_document = {}
-                    for op, value in update_args.iteritems():
+                    for op, value in update_args.items():
                         if op in ['$unset', '$set', '$inc']:
                             validator.validate_partial_update_set_unset(
                                 value, cls._schema_)
@@ -333,7 +332,7 @@ class BaseResource(object):
 
     def patch_update(self, update_args, ignore_last_update=False):
         update_document = {}
-        for op, value in update_args.iteritems():
+        for op, value in update_args.items():
             if op in ['$unset', '$set', '$inc']:
                 validator.validate_partial_update_set_unset(value, self._schema_)
                 update_document[op] = dict(value)
@@ -342,11 +341,9 @@ class BaseResource(object):
                 update_document[op] = dict(value)
             else:
                 raise Exception("Invalid Update Operator passed.")
-
         update_document['$set'] = update_document.get('$set', {'_last_updated': datetime.utcnow()})
         if not ignore_last_update:
             update_document['$set']['last_updated'] = datetime.utcnow()
-
         self.db_coll.update({'_id': self._id}, update_document)
 
     def update_array_item_increment(self, array_item, field, incr_by):
@@ -379,7 +376,7 @@ class BaseResource(object):
         filter_args = apply_default_filter_args(filter_args)
 
         update_document = {}
-        for op, value in update_args.iteritems():
+        for op, value in update_args.items():
             if op in ['$unset', '$set', '$inc']:
                 validator.validate_partial_update_set_unset(value, cls._schema_)
                 update_document[op] = dict(value)

@@ -28,7 +28,7 @@ class UserAPI(BaseHandler):
     def _get_detail_fields(self):
         return {'email': 1, **dict(User._default_fields_.items())}
 
-    def get_list(self, is_editor=True, skip=0, limit=25, first_name=None,
+    def get_list(self, skip=0, limit=25, first_name=None,
                  last_name=None, email=None, _id=None, **kwargs):
         """Provides list of users.
 

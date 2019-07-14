@@ -49,8 +49,8 @@ def tokenize(f):
     return decorated_function
 
 
-def handle_next_url(params, url = "?"):
-    for k,v in params.iteritems():
+def handle_next_url(params, url="?"):
+    for k,v in params.items():
         if isinstance(v, list):
             for _v in v:
                 if isinstance(_v,datetime):

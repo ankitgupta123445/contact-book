@@ -69,16 +69,22 @@ SCHEMAS = {
             "type": "object",
             "properties": {
                 "first_name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 3
                 },
                 "last_name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 3
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "email"
                 },
                 "mobile": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "mobile"
                 },
                 "created_on": {
                     "type": "datetime"
