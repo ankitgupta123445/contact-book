@@ -22,3 +22,21 @@ _Environment variables or basic auth(for rest APIs)_
 `./bin/setup-dependency.sh`
 
 `python runserver.py`
+
+`create user `
+
+`API: <base_url>/v1/user`
+
+###### Payload:
+ 
+    {"first_name": "Jay",
+    
+    "last_name": "Prakash",
+    
+    "email":"jaymailbox2012@gmail.com",
+    
+    "password": "jp543672"}
+
+
+1. Response will return auth_token 
+2. Test CRUD contact using token as API Header
