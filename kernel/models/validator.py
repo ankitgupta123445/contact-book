@@ -151,17 +151,17 @@ def check_email(data):
 
 
 def check_mobile(data):
-    if not re.match(r'^[6-9]\d{9}$', data):
+    if data and not re.match(r'^[6-9]\d{9}$', data):
         raise TypeError("Invalid mobile_no format, found {}".format(data))
 
 
 def max_length(value, key):
-    if len(value) > key:
+    if value and len(value) > key:
         raise Exception("maxLength is {} : found {} in ({})".format(key, len(value), value))
 
 
 def min_length(value, key):
-    if len(value) < key:
+    if value and len(value) < key:
         raise Exception("minLength is {} : found {} in ({})".format(key, len(value), value))
 
 

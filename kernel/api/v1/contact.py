@@ -77,7 +77,7 @@ class ContactAPI(BaseHandler):
     def edit_id(self, _id, **kwargs):
         contact = Contact.get({'_id': _id})
         if not contact:
-            raise CustomException("Training Lesson Not Found")
+            raise CustomException("Contact Not Found")
         contact_data = contact.get_data()
 
         _u = {}

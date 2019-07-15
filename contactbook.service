@@ -1,0 +1,11 @@
+[Unit]
+Description=uWSGI instance to serve contact book service
+After=network.target
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/contact-book
+Environment="PATH=/var/www/contact-book/.ve/bin"
+ExecStart=/var/www/contact-book/.ve/bin/uwsgi --ini contactbook.ini
+[Install]
+WantedBy=multi-user.target

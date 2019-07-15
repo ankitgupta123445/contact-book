@@ -44,7 +44,7 @@ def schema_get(version, primary_schema, **kwargs):
 
 
 @fix_arg
-@is_authorized(skip=[])
+@is_authorized(skip=['user'])
 def schema_post(version, primary_schema, **kwargs):
     return REGISTERED_ROUTE[version][primary_schema].create(**kwargs)
 
